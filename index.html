@@ -100,7 +100,7 @@ function placeOrder(){
  const productsText=cart.map(x=>`• ${x.name} × ${x.qty} = ${x.price*x.qty} DH`).join("\n");
  const message=`🛒 *Nouvelle commande - Planet Store*\n\n👤 Nom : ${name}\n📱 Téléphone : ${phone}\n📍 Ville : ${city}\n🏠 Adresse : ${address}\n\n📦 *Produits :*\n${productsText}\n\n💰 *Total : ${total} DH*\n💵 Paiement : À la livraison`;
 
- const whatsappNumber="2126553504233";
+ const whatsappNumber="212655350423";
  const url=`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
  window.open(url,"_blank");
 
