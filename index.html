@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Planet Store — Électronique & Accessoires</title>
+<meta name="description" content="Planet Store — produits électroniques et accessoires. Paiement à la livraison au Maroc.">
+<style>
+:root{--dark:#101828;--primary:#2563eb;--light:#f6f8fc;--card:#fff;--muted:#667085}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--light);color:var(--dark)}
+header{background:#fff;position:sticky;top:0;z-index:10;border-bottom:1px solid #e5e7eb}
+.nav{max-width:1180px;margin:auto;padding:16px 20px;display:flex;align-items:center;gap:22px}
+.logo{font-size:25px;font-weight:800;color:var(--primary)}.logo span{color:#111827}
+.search{flex:1;padding:12px 15px;border:1px solid #d0d5dd;border-radius:12px}
+.cart{border:0;background:var(--dark);color:#fff;padding:12px 16px;border-radius:12px;cursor:pointer}
+.hero{background:linear-gradient(120deg,#0f172a,#2563eb);color:#fff}
+.hero-in{max-width:1180px;margin:auto;padding:65px 20px;display:grid;grid-template-columns:1.3fr 1fr;gap:30px;align-items:center}
+.hero h1{font-size:48px;margin:0 0 15px}.hero p{font-size:19px;color:#e5e7eb;line-height:1.6}
+.btn{display:inline-block;background:#fff;color:#1d4ed8;padding:13px 20px;border-radius:12px;text-decoration:none;font-weight:700}
+.badges{display:flex;gap:12px;flex-wrap:wrap;margin-top:25px}.badge{background:#ffffff18;border:1px solid #ffffff30;padding:10px 13px;border-radius:999px}
+main{max-width:1180px;margin:auto;padding:35px 20px}.toolbar{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:22px}
+.filters button{border:1px solid #d0d5dd;background:#fff;padding:9px 13px;border-radius:10px;margin:3px;cursor:pointer}.filters button.active{background:var(--primary);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}.product{background:var(--card);border-radius:18px;overflow:hidden;box-shadow:0 4px 18px #1018280c;border:1px solid #eef0f4}
+.pic{height:190px;background:#eef4ff;display:flex;align-items:center;justify-content:center;font-size:68px}.info{padding:17px}.category{font-size:12px;color:var(--primary);font-weight:700}.product h3{margin:8px 0;font-size:17px}.price{font-size:20px;font-weight:800;margin:10px 0}.old{text-decoration:line-through;color:#98a2b3;font-size:13px;margin-left:7px}
+.add{width:100%;border:0;background:var(--primary);color:#fff;padding:11px;border-radius:10px;cursor:pointer;font-weight:700}
+footer{margin-top:40px;background:#101828;color:#d0d5dd}.foot{max-width:1180px;margin:auto;padding:35px 20px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.drawer{position:fixed;right:-430px;top:0;width:400px;max-width:95%;height:100%;background:#fff;z-index:30;box-shadow:-8px 0 30px #0002;padding:22px;transition:.25s;overflow:auto}.drawer.open{right:0}
+.overlay{display:none;position:fixed;inset:0;background:#0006;z-index:20}.overlay.open{display:block}.close{float:right;border:0;background:#eee;padding:8px 12px;border-radius:8px}
+.item{display:flex;gap:12px;padding:13px 0;border-bottom:1px solid #eee}.item .emoji{font-size:35px}.qty button{padding:3px 8px}
+.form input,.form textarea{width:100%;padding:11px;margin:6px 0 10px;border:1px solid #d0d5dd;border-radius:9px}.confirm{background:#16a34a;color:white;border:0;width:100%;padding:13px;border-radius:10px;font-weight:700;cursor:pointer}
+@media(max-width:850px){.grid{grid-template-columns:repeat(2,1fr)}.hero-in{grid-template-columns:1fr}.hero h1{font-size:38px}.search{display:none}}
+@media(max-width:520px){.grid{grid-template-columns:1fr}.nav{gap:10px}.hero-in{padding:45px 20px}.hero h1{font-size:34px}}
+</style>
+</head>
+<body>
+<header><div class="nav">
+  <div class="logo">Planet <span>Store</span></div>
+  <input id="search" class="search" placeholder="Rechercher un produit...">
+  <button class="cart" onclick="openCart()">🛒 Panier (<span id="count">0</span>)</button>
+</div></header>
+
+<section class="hero"><div class="hero-in">
+<div><h1>Bienvenue chez Planet Store</h1><p>Électronique, accessoires et produits tendance au meilleur rapport qualité-prix. Commandez en ligne et payez à la livraison.</p>
+<a class="btn" href="#products">Découvrir les produits</a>
+<div class="badges"><span class="badge">🚚 Livraison au Maroc</span><span class="badge">💵 Paiement à la livraison</span><span class="badge">🔒 Commande simple & sécurisée</span></div></div>
+<div style="font-size:150px;text-align:center">🛍️</div>
+</div></section>
+
+<main id="products">
+<div class="toolbar"><div><h2 style="margin:0">Nos produits</h2><p style="color:var(--muted);margin:6px 0">Électronique & accessoires</p></div>
+<div class="filters"><button class="active" onclick="filter('all',this)">Tous</button><button onclick="filter('audio',this)">Audio</button><button onclick="filter('phone',this)">Téléphones</button><button onclick="filter('accessory',this)">Accessoires</button></div></div>
+<div id="grid" class="grid"></div>
+</main>
+
+<footer><div class="foot"><div><strong style="font-size:21px;color:#fff">Planet Store</strong><p>Votre boutique électronique en ligne au Maroc.</p></div><div><strong>Service client</strong><p>Paiement à la livraison<br>Livraison partout au Maroc</p></div></div></footer>
+
+<div id="overlay" class="overlay" onclick="closeCart()"></div>
+<aside id="drawer" class="drawer"><button class="close" onclick="closeCart()">✕</button><h2>Votre panier</h2><div id="cartItems"></div><hr><h3>Total : <span id="total">0</span> DH</h3>
+<div class="form"><h3>Informations de livraison</h3><input id="name" placeholder="Nom complet"><input id="phone" placeholder="Téléphone"><input id="city" placeholder="Ville"><textarea id="address" rows="3" placeholder="Adresse de livraison"></textarea>
+<button class="confirm" onclick="placeOrder()">Confirmer la commande — Paiement à la livraison</button></div></aside>
+
+<script>
+const products=[
+{id:1,name:"Écouteurs Bluetooth Pro",cat:"audio",price:149,emoji:"🎧"},
+{id:2,name:"Power Bank 20 000 mAh",cat:"accessory",price:199,emoji:"🔋"},
+{id:3,name:"Chargeur Rapide USB-C",cat:"accessory",price:89,emoji:"🔌"},
+{id:4,name:"Montre Connectée",cat:"phone",price:249,emoji:"⌚"},
+{id:5,name:"Mini Enceinte Bluetooth",cat:"audio",price:179,emoji:"🔊"},
+{id:6,name:"Support Téléphone Voiture",cat:"accessory",price:79,emoji:"📱"},
+{id:7,name:"Clavier Sans Fil",cat:"accessory",price:159,emoji:"⌨️"},
+{id:8,name:"Câble USB-C Premium",cat:"accessory",price:59,emoji:"🔗"}
+];
+let cart=[]; let current="all";
+function render(){
+ const q=document.getElementById("search").value.toLowerCase();
+ const list=products.filter(p=>(current==="all"||p.cat===current)&&p.name.toLowerCase().includes(q));
+ document.getElementById("grid").innerHTML=list.map(p=>`<article class="product"><div class="pic">${p.emoji}</div><div class="info"><div class="category">${p.cat.toUpperCase()}</div><h3>${p.name}</h3><div class="price">${p.price} DH</div><button class="add" onclick="add(${p.id})">Ajouter au panier</button></div></article>`).join("");
+}
+function filter(c,b){current=c;document.querySelectorAll(".filters button").forEach(x=>x.classList.remove("active"));b.classList.add("active");render()}
+document.getElementById("search").addEventListener("input",render);
+function add(id){const p=products.find(x=>x.id===id);const x=cart.find(x=>x.id===id);x?x.qty++:cart.push({...p,qty:1});update();openCart()}
+function update(){
+ document.getElementById("count").textContent=cart.reduce((s,x)=>s+x.qty,0);
+ document.getElementById("cartItems").innerHTML=cart.length?cart.map(x=>`<div class="item"><div class="emoji">${x.emoji}</div><div style="flex:1"><strong>${x.name}</strong><div>${x.price} DH × ${x.qty}</div><div class="qty"><button onclick="change(${x.id},-1)">−</button> <button onclick="change(${x.id},1)">+</button> <button onclick="removeItem(${x.id})">Supprimer</button></div></div></div>`).join(""):"<p>Votre panier est vide.</p>";
+ document.getElementById("total").textContent=cart.reduce((s,x)=>s+x.price*x.qty,0);
+}
+function change(id,n){const x=cart.find(x=>x.id===id);if(x){x.qty+=n;if(x.qty<=0)removeItem(id)}update()}
+function removeItem(id){cart=cart.filter(x=>x.id!==id);update()}
+function openCart(){document.getElementById("drawer").classList.add("open");document.getElementById("overlay").classList.add("open");update()}
+function closeCart(){document.getElementById("drawer").classList.remove("open");document.getElementById("overlay").classList.remove("open")}
+function placeOrder(){
+ if(!cart.length)return alert("Votre panier est vide.");
+ const name=document.getElementById("name").value.trim(),phone=document.getElementById("phone").value.trim(),city=document.getElementById("city").value.trim(),address=document.getElementById("address").value.trim();
+ if(!name||!phone||!city||!address)return alert("Veuillez remplir toutes les informations de livraison.");
+ const order=cart.map(x=>`${x.name} x${x.qty}`).join(", ");
+ alert(`Merci ${name} ! Votre commande a été enregistrée.\\n\\nProduits: ${order}\\nTotal: ${document.getElementById("total").textContent} DH\\nPaiement: à la livraison.`);
+ cart=[];update();closeCart();
+}
+render();update();
+</script>
+</body></html>
