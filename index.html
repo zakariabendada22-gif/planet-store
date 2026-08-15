@@ -90,10 +90,20 @@ function openCart(){document.getElementById("drawer").classList.add("open");docu
 function closeCart(){document.getElementById("drawer").classList.remove("open");document.getElementById("overlay").classList.remove("open")}
 function placeOrder(){
  if(!cart.length)return alert("Votre panier est vide.");
- const name=document.getElementById("name").value.trim(),phone=document.getElementById("phone").value.trim(),city=document.getElementById("city").value.trim(),address=document.getElementById("address").value.trim();
+ const name=document.getElementById("name").value.trim(),
+       phone=document.getElementById("phone").value.trim(),
+       city=document.getElementById("city").value.trim(),
+       address=document.getElementById("address").value.trim();
  if(!name||!phone||!city||!address)return alert("Veuillez remplir toutes les informations de livraison.");
- const order=cart.map(x=>`${x.name} x${x.qty}`).join(", ");
- alert(`Merci ${name} ! Votre commande a été enregistrée.\\n\\nProduits: ${order}\\nTotal: ${document.getElementById("total").textContent} DH\\nPaiement: à la livraison.`);
+
+ const total=cart.reduce((s,x)=>s+x.price*x.qty,0);
+ const productsText=cart.map(x=>`• ${x.name} × ${x.qty} = ${x.price*x.qty} DH`).join("\n");
+ const message=`🛒 *Nouvelle commande - Planet Store*\n\n👤 Nom : ${name}\n📱 Téléphone : ${phone}\n📍 Ville : ${city}\n🏠 Adresse : ${address}\n\n📦 *Produits :*\n${productsText}\n\n💰 *Total : ${total} DH*\n💵 Paiement : À la livraison`;
+
+ const whatsappNumber="2126553504233";
+ const url=`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+ window.open(url,"_blank");
+
  cart=[];update();closeCart();
 }
 render();update();
